@@ -1,0 +1,23 @@
+﻿00:00  认识这只菜鱼狗 / Meet the Caiyu Dog
+00:23  先把零件认全 / Identify the parts
+00:49  分清电路板的两面 / Understand both sides of the PCB
+01:19  焊接前的准备 / Prepare for soldering
+01:42  看清一个焊点怎么形成 / Make and inspect a solder joint
+02:08  安装电源、接口与主控 / Install power components, connectors and controller
+02:40  屏幕的四根线 / Wire the OLED display
+03:07  连接数字麦克风 / Connect the digital microphone
+03:33  功放与扬声器 / Connect the amplifier and speaker
+03:56  触摸与灯带共用 GPIO0 / Touch sensor and LEDs share GPIO0
+04:25  四条腿的信号与电源 / Wire the four servos
+04:52  断电检查再上电 / Inspect before powering on
+05:26  烧录前先认文件 / Identify the correct firmware image
+05:59  先验证屏幕和语音 / Test the display and voice functions
+06:28  打印件先试合 / Dry-fit the printed parts
+06:58  放置屏幕与内部模块 / Place the screen and internal modules
+07:28  先确定舵机的装臂姿态 / Set the servo horn positions
+08:00  安装一条腿看清顺序 / Assemble one leg step by step
+08:34  四条腿的方向 / Check all four leg orientations
+09:03  收线以后再合壳 / Route the wires and close the shell
+09:31  微调和整机验收 / Trim and test the complete robot
+10:05  遇到问题按顺序排查 / Troubleshoot one issue at a time
+10:33  从零件，到一只桌面小狗 / From parts to a desktop companion

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6f8f8">
+  <title>菜鱼狗 · 从焊接到整机</title>
+  <meta name="description" content="跟着三维模型，逐步完成菜鱼狗 C3 的焊接、接线、检查与装配。中文配音、逐根接线、章节视频与本地学习进度。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='4' width='28' height='24' rx='7' fill='%23087aaf'/%3E%3Cpath d='M11 12v8m10-8v8' stroke='white' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/addons/"}}</script>
+</head>
+<body>
+<a class="skip" href="#lessonTitle">跳到当前步骤</a>
+<header class="topbar">
+  <a href="#" class="brand" id="homeLink" aria-label="菜鱼狗教程首页"><svg viewBox="0 0 40 36" aria-hidden="true"><rect x="2" y="4" width="36" height="28" rx="9"/><path d="M14 13v10m12-10v10"/></svg><span>菜鱼狗<small>从焊接到整机</small></span></a>
+  <div class="header-actions"><button id="contentsBtn" class="mobile-only">完整目录</button><button id="videoBtn">配套视频</button><button id="resourcesBtn">资料与模型</button></div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar" aria-label="教程目录">
+    <div class="sidebar-head"><h2>制作顺序</h2><button id="closeContents" class="mobile-only" aria-label="关闭目录">关闭</button></div>
+    <label class="search-label" for="chapterSearch">查找步骤或引脚</label><input id="chapterSearch" type="search" placeholder="搜索，如屏幕、焊接、GPIO…" autocomplete="off">
+    <nav id="chapterList" aria-label="章节"></nav><p id="emptySearch" hidden>没有找到对应步骤。试试“屏幕”或“装腿”。</p>
+    <div class="study-progress"><div><span>学习进度</span><strong id="progressText">0 / 46</strong></div><progress id="totalProgress" value="0" max="46" aria-label="已完成的学习步骤"></progress><p>进度保存在当前浏览器</p><button id="resetBtn" class="text-button">重新开始学习</button></div>
+  </aside>
+  <main id="main">
+    <div class="lesson-heading"><div><h1 id="lessonTitle" tabindex="-1">认识这只菜鱼狗</h1><p id="lessonLead">先焊接，再装配，最后逐项验收。</p></div><span class="version">ESP32-C3 版</span></div>
+    <div class="step-tabs" role="group" aria-label="本章动作"><button id="beatOne" aria-pressed="true"></button><button id="beatTwo" aria-pressed="false"></button></div>
+    <div class="work-layout">
+      <section class="workarea" aria-label="三维操作工作台">
+        <div class="view-toolbar"><span id="mode-label">三维操作演示</span><div><button id="labelsBtn" aria-pressed="true">标注</button><button id="inspectBtn" aria-pressed="false">自由观察</button><button id="resetViewBtn" title="恢复固定教学机位">恢复机位</button></div></div>
+        <div class="viewport" id="viewport">
+          <div class="stage" id="stage"><canvas id="workbench" width="1330" height="780" aria-label="当前步骤的交互式三维模型"></canvas><div id="leader-wrap"><svg id="leaders" viewBox="0 0 1330 780" aria-hidden="true"></svg><div id="object-labels"></div></div></div>
+          <button id="targetBtn" class="target"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m10 8 6 4-6 4z"/></svg><span>演示本步</span></button>
+          <div id="loading" role="status">正在准备三维零件…</div>
+        </div>
+        <p class="view-hint" id="viewHint">固定教学机位 · 点蓝色按钮开始，随时暂停</p>
+        <div class="playback"><label for="scrubber">动作进度</label><input id="scrubber" type="range" min="0" max="1000" value="0" aria-label="拖动查看当前动作"><output id="timeText" for="scrubber">0:00 / 0:09</output></div>
+        <p id="subtitle" class="subtitle" aria-live="off"></p>
+        <div class="control-row"><button id="prevBtn">上一步</button><button id="playBtn" class="primary" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7z"/></svg><span>演示本步</span></button><button id="replayBtn" title="从头回放当前动作">重播</button><button id="nextBtn" disabled>看完后继续</button></div>
+        <div class="options-row"><label><input type="checkbox" id="voiceToggle" checked> 中文配音</label><label for="speedSelect">速度 <select id="speedSelect"><option value="0.75">0.75 倍</option><option value="1" selected>正常</option><option value="1.25">1.25 倍</option></select></label><span id="stepCounter">步骤 1 / 46</span></div>
+      </section>
+      <aside class="instructions" aria-label="本步操作说明">
+        <div class="panel-tabs" role="tablist" aria-label="学习资料"><button id="operationTab" role="tab" aria-selected="true" aria-controls="operationPanel">本步操作</button><button id="wiringTab" role="tab" aria-selected="false" aria-controls="wiringPanel">接线表</button><button id="checkTab" role="tab" aria-selected="false" aria-controls="checkPanel">检查</button></div>
+        <section id="operationPanel" role="tabpanel" aria-labelledby="operationTab"><span id="action-count" class="action-count"></span><h2 id="instruction"></h2><p id="fullText"></p><div id="detail-rows" class="detail-rows"></div><div class="caution"><strong>动手前确认</strong><p id="caution"></p></div><div id="quiz" class="quiz" hidden></div></section>
+        <section id="wiringPanel" role="tabpanel" aria-labelledby="wiringTab" hidden><h2>看清起点与终点</h2><p>点击一根线，跳到对应章节并突出显示。图示表示连接关系，孔序以实物丝印为准。</p><div id="wiringList"></div><p class="small-note">电源规格以匹配的 PCB 与材料包为准；四只舵机使用独立动力支路并共地。</p></section>
+        <section id="checkPanel" role="tabpanel" aria-labelledby="checkTab" hidden><h2>本章检查点</h2><p>仅在你亲自核对后勾选；学习进度与实物检查分别记录。</p><div id="checkList"></div><p class="small-note">网页不会连接或控制机器人，模拟动作和学习完成状态不能代替实物验收。</p></section>
+        <p class="source-note"><a href="https://github.com/Zohlz/xiaozhi-esp32-caiyudog" target="_blank" rel="noopener">原作者：菜鱼的DIY / Zohlz</a><br>三维教学演示 · 原始外壳模型 3020128</p>
+      </aside>
+    </div>
+    <footer><span>先看清，再动手。每次只做一个动作。</span><span id="chapter-number" hidden></span><div id="chapter-progress" hidden></div></footer>
+  </main>
+</div>
+<dialog id="videoDialog" aria-labelledby="videoTitle"><div class="dialog-heading"><h2 id="videoTitle">配套中文视频</h2><button id="closeVideo" aria-label="关闭视频">关闭</button></div><video id="video" controls playsinline preload="none" poster="assets/poster.jpg"><source src="downloads/菜鱼狗_网页配套教程.mp4" type="video/mp4"></video><p>从当前章节开始，约 11 分 06 秒。已包含中文旁白与字幕。</p><a href="downloads/菜鱼狗_网页配套教程.mp4" download>下载完整 MP4</a></dialog>
+<dialog id="resourcesDialog" aria-labelledby="resourceTitle"><div class="dialog-heading"><h2 id="resourceTitle">资料与模型</h2><button id="closeResources">关闭</button></div><p>配套文件与当前教程使用同一版本。模型用于教学观察；打印使用作者原始模型。</p><ul class="downloads"><li><a href="downloads/菜鱼狗_三维教学模型.glb" download>下载三维教学模型 <span>GLB · 19 MB</span></a></li><li><a href="downloads/菜鱼狗_完整教程.srt" download>下载中文字幕 <span>SRT</span></a></li><li><a href="downloads/章节索引.txt" download>下载视频章节索引 <span>TXT</span></a></li><li><a href="https://www.bilibili.com/video/BV1E6hb64EV2" target="_blank" rel="noopener">作者完整教程 <span>哔哩哔哩</span></a></li><li><a href="https://makerworld.com.cn/zh/models/3020128-cai-yu-gou-di-cheng-ben-zhi-neng-xiao-gou" target="_blank" rel="noopener">原始打印模型 3020128 <span>MakerWorld</span></a></li><li><a href="https://github.com/Zohlz/xiaozhi-esp32-caiyudog/tree/15d8263aaf07574b45f837efd905d8988cb59fba" target="_blank" rel="noopener">对应版本源码与引脚表 <span>GitHub</span></a></li></ul><p class="small-note">中文旁白沿用本地 Breeze TTS 2 原创教学声线，相关模型与输出按其非商业许可使用。Three.js 遵循 MIT；外壳保留原作者署名。</p><button id="exportProgress">导出我的学习与检查记录</button></dialog>
+<dialog id="resetDialog" aria-labelledby="resetTitle"><h2 id="resetTitle">重新开始学习？</h2><p>这会清除当前浏览器里的学习进度和手动检查记录。</p><div class="reset-actions"><button id="cancelReset">保留记录</button><button id="confirmReset">清除并重新开始</button></div></dialog>
+<p id="toast" role="status" hidden></p>
+<script type="module" src="app.js"></script>
+</body></html>
+
